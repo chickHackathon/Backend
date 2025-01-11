@@ -38,5 +38,10 @@ public class StudyController {
         return new BaseResponse<>(myStudies);
     }
 
+     @GetMapping("/{studyId}")
+    public BaseResponse<StudyDetailRes> getStudyDetail(@PathVariable Long studyId) {
+        StudyDetailRes studyDetailRes = studyService.getStudyDetail(studyId);
+        return new BaseResponse<>(studyDetailRes);
+    }
 
 }

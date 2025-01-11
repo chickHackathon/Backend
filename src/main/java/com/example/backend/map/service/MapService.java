@@ -1,24 +1,32 @@
 package com.example.backend.map.service;
 
 import com.example.backend.map.dto.MapDto;
+import com.example.backend.member.entity.Member;
+import com.example.backend.member.repository.MemberRepository;
+import com.example.backend.study.repository.StudyRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 public class MapService {
 
-    public MapDto calculateDistance(Long studyId) {
+    private final MemberRepository memberRepository;
 
-        // 더미 데이터
-        List<double[]> coordinates = Arrays.asList(
-                new double[]{37.5665, 126.9780},
-                new double[]{34.0522, -118.2437},
-                new double[]{48.8566, 2.3522}
-        );
+    public MapDto calculateDistance(List<String> memberIds) {
+
+        List<double[]> coordinates = memberIds.stream()
+                .map(memberId -> {
+                    Member member = memberRepository.findById(Long.parseLong(memberId))
+                            .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 사용자입니다."));
+
+                    return new double[]{member.getLatitude(), member.getLongitude()};
+                })
+                .collect(Collectors.toList());
 
         double[] midpoint = calculateGeographicalMidpoint(coordinates);
 
