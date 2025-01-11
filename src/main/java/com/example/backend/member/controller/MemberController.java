@@ -23,7 +23,7 @@ public class MemberController {
     private final TokenResolver tokenResolver;
 
     @PostMapping("/signup")
-    public String signup(@RequestBody MemberSignupRequest memberSignupRequest) {
+    public String signup(@RequestPart MemberSignupRequest memberSignupRequest) {
         memberService.signup(memberSignupRequest);
         return "회원가입 성공";
     }

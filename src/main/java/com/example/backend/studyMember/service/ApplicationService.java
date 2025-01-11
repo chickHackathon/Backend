@@ -58,7 +58,7 @@ public class ApplicationService {
     }
 
     public List<ApplicationMemberDto> findApplicationMembers(Member member){
-        List<Study> memberStudies = studyRepository.findByMember_Id(member.getId());
+        List<Study> memberStudies = studyRepository.findByMemberId(member.getId());
         log.info(memberStudies.toString()+":::::::::::"+member.getId());
         List<Application> applications = new ArrayList<>();
         List<ApplicationMemberDto> applicationMembers = new ArrayList<>();

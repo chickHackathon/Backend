@@ -1,6 +1,7 @@
 package com.example.backend.file.controller;
 
 import com.example.backend.common.BaseResponse;
+import com.example.backend.file.service.CloudFileUploadService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
