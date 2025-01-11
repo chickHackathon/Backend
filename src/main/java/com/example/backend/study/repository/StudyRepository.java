@@ -14,5 +14,4 @@ public interface StudyRepository extends JpaRepository<Study, Long> {
     // 내가 만든 스터디 조회
     List<Study> findByMember(Member member);
 
-
 }

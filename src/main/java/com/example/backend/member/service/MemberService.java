@@ -30,6 +30,7 @@ public class MemberService {
         // 랜덤 아바타 숫자 생성
         int randomAvatar = RandomNumberGenerator.generateRandomAvatar();
         Member member = Member.builder()
+                .nickname(request.getNickname())
                 .name(request.getName())
                 .email(request.getEmail())
                 .password(request.getPassword())
@@ -84,4 +85,6 @@ public class MemberService {
     }
 
 
+    public Member findByMemberName(String username) {
+        return memberRepository.findByName(username);    }
 }

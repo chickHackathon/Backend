@@ -17,11 +17,11 @@ public class MapController {
     private final MapService mapService;
 
     @GetMapping("/studies/{studyId}/map")
-    public MapDto calculateDistance(
+    public BaseResponse<MapDto> calculateDistance(
             @PathVariable("studyId") Long studyId
     ) {
         MapDto mapDto = mapService.calculateDistance(studyId);
-        BaseResponse<MapDto> baseResponse = new BaseResponse<>(mapDto);
-        return baseResponse.getResult();
+        return new BaseResponse<>(mapDto);
+
     }
 }
