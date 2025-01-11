@@ -48,7 +48,14 @@ public class JwtProvider {
         Map<String, Object> claims = new HashMap<>();
 
         claims.put("id", member.getId());
-        claims.put("username", member.getName());
+        claims.put("nickname", member.getNickname());
+        claims.put("latitude",member.getLatitude());
+        claims.put("longitude",member.getLongitude());
+        claims.put("region_1depth_name",member.getRegion_1depth_name());
+        claims.put("region_2depth_name",member.getRegion_2depth_name());
+        claims.put("region_3depth_name",member.getRegion_3depth_name());
+        claims.put("avatar",member.getAvatar());
+
         long now = new Date().getTime();
         Date accessTokenExpiresIn = new Date(now + 1000L * seconds);
         return Jwts.builder()

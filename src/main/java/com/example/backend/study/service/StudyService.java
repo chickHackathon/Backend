@@ -10,13 +10,9 @@ import com.example.backend.study.dto.StudyListReq;
 import com.example.backend.study.dto.StudyListRes;
 import com.example.backend.study.entity.Study;
 import com.example.backend.study.repository.StudyRepository;
+import com.example.backend.studyMember.repository.RecruitmentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -26,6 +22,7 @@ import java.util.stream.Stream;
 public class StudyService {
     private final StudyRepository studyRepository;
     private final MemberRepository memberRepository;
+    private final RecruitmentRepository recruitmentRepository;
 
      public StudyCreateRes register(StudyCreateReq request) {
             // Member 조회 (스터디장 찾기)
@@ -63,24 +60,31 @@ public class StudyService {
                         .build())
                 .collect(Collectors.toList());
     }
-//    // 내가 참여하고나 내가 만든 스터디 조회
-//    public List<StudyListRes> getMyStudies(Member member) {
-//        // 내가 만든 스터디 조회 (스터디장이 나인 경우)
-//        List<Study> createdStudies = studyRepository.findByMember(member);
-//
-//        // 내가 참여한 스터디 조회 (participants에 내가 포함된 경우)
-//        List<Study> joinedStudies = member.getJoinedStudies();
-//
-//        // 두 리스트 합치기 (중복 제거)
-//        List<Study> allStudies = Stream.concat(createdStudies.stream(), joinedStudies.stream())
-//                .distinct()
-//                .collect(Collectors.toList());
-//
-//        // 응답 객체로 변환
-//        return allStudies.stream()
-//                .map(study -> new StudyListRes(study.getId(), study.getTitle(), study.getImg()))
-//                .collect(Collectors.toList());
-//
-//    }
+    public List<StudyListRes> getMyStudies(Member member) {
+        // 내가 만든 스터디 조회 (스터디장이 나인 경우)
+        List<Study> createdStudies = studyRepository.findByMember(member);
+
+        // 내가 참여한 스터디 조회 (Recruitment 테이블에서 applicant_id로 검색)
+        List<Study> joinedStudies = recruitmentRepository.findJoinedStudiesByMemberId(member.getId());
+
+        // 두 리스트 합치기 (중복 제거)
+        List<Study> allStudies = Stream.concat(createdStudies.stream(), joinedStudies.stream())
+                .distinct()
+                .collect(Collectors.toList());
+
+        // 응답 객체로 변환
+        return allStudies.stream()
+                .map(study -> new StudyListRes(
+                        study.getId(),
+                        study.getTitle(),
+                        study.getImg(),
+                        study.getContent(),
+                        study.getCategory() != null ? study.getCategory().getCode() : null, // Enum 값을 문자열로 변환
+                        study.isFinish()
+                ))
+                .collect(Collectors.toList());
+
+    }
+
 }
 
