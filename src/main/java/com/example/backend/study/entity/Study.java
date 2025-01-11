@@ -11,6 +11,8 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import static jakarta.persistence.FetchType.LAZY;
+
 
 @Entity
 @AllArgsConstructor
@@ -32,9 +34,9 @@ public class Study {
     @Column(name = "Img")
     private String Img = "";
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "member_id", nullable = false)
-    private Member member; // 스터디장
+    @ManyToOne(fetch = LAZY)
+    @JoinColumn(name = "member_id")
+    private Member member;
 
     @Column(name = "title", length = 100, nullable = false)
     private String title; // varchar(100)
@@ -56,15 +58,6 @@ public class Study {
 
     @Column(name = "finish", nullable = false)
     private boolean finish;
-
-    // 참여자 목록 (다대다 관계)
-    @ManyToMany
-    @JoinTable(
-            name = "study_participants",
-            joinColumns = @JoinColumn(name = "study_id"),
-            inverseJoinColumns = @JoinColumn(name = "member_id")
-    )
-    private List<Member> participants = new ArrayList<>();
 
 }
 
