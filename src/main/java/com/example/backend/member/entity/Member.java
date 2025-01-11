@@ -27,9 +27,11 @@ public class Member {
     @Column(nullable = false, length = 100)
     private String email;
 
-    private String location;
-    private float Latitude;
-    private float Longitude;
+    private float latitude;
+    private float longitude;
+    private String region_1depth_name;
+    private String region_2depth_name;
+    private String region_3depth_name;
 
     @JsonIgnore
     private String refreshToken;
