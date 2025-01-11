@@ -31,7 +31,6 @@ public class StudyController {
         return new BaseResponse<>(studyList);
     }
 
-    // 나의 스터디 조회
 
 
 
