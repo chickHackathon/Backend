@@ -36,9 +36,6 @@ public class MemberService {
                 .password(request.getPassword())
                 .latitude(request.getLatitude())
                 .longitude(request.getLongitude())
-                .region_1depth_name(request.getRegion_1depth_name())
-                .region_2depth_name(request.getRegion_2depth_name())
-                .region_3depth_name(request.getRegion_3depth_name())
                 .avatar(randomAvatar)
                 .build();
         return memberRepository.save(member);

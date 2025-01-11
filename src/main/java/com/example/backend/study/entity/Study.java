@@ -59,5 +59,7 @@ public class Study {
     @Column(name = "finish", nullable = false)
     private boolean finish;
 
+
+
 }
 

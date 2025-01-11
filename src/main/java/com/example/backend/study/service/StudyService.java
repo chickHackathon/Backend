@@ -59,6 +59,10 @@ public class StudyService {
                         .img(entity.getImg())
                         .content(entity.getContent())
                         .category(String.valueOf(entity.getCategory()))
+                        .finish(entity.isFinish())
+                        .deadLine(entity.getDeadline())
+                        .studyTime(entity.getStudyTime())
+                        .location(entity.getMember().getLocation())
                         .build())
                 .collect(Collectors.toList());
     }

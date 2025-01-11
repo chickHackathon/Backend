@@ -5,6 +5,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
@@ -16,5 +18,8 @@ public class StudyListRes {
     private String content;
     private String category;
     private boolean finish;
+    private LocalDateTime deadLine;
+    private LocalDateTime studyTime;
+    private String location;
 }
 
