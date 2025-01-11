@@ -1,11 +1,13 @@
 package com.example.backend.study.controller;
 
 import com.example.backend.common.BaseResponse;
+import com.example.backend.file.service.CloudFileUploadService;
 import com.example.backend.member.entity.Member;
 import com.example.backend.study.dto.*;
 import com.example.backend.study.service.StudyService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -14,11 +16,19 @@ import java.util.List;
 @RequiredArgsConstructor
 public class StudyController {
     private final StudyService studyService;
+    private final CloudFileUploadService cloudFileUploadService;
     // 스터디 생성
     @PostMapping()
     public BaseResponse<StudyCreateRes> register(
-            @RequestBody StudyCreateReq studyCreateRequest) {
-        StudyCreateRes studyCreateRes = studyService.register(studyCreateRequest);
+            @RequestBody StudyCreateReq studyCreateRequest,
+            @RequestPart(required=false) MultipartFile Img) {
+        // 이미지 업로드 후 URL 반환
+        String uploadedImgUrl = null;
+        if (Img != null) {
+            uploadedImgUrl = cloudFileUploadService.uploadImg(Img);
+        }
+        // 스터디 등록
+        StudyCreateRes studyCreateRes = studyService.register(studyCreateRequest, uploadedImgUrl);
         return new BaseResponse<>(studyCreateRes);
     }
     // 스터디 목록 조회
