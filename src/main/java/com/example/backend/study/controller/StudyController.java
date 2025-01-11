@@ -20,7 +20,7 @@ public class StudyController {
     // 스터디 생성
     @PostMapping()
     public BaseResponse<StudyCreateRes> register(
-            @RequestBody StudyCreateReq studyCreateRequest,
+            @RequestPart StudyCreateReq studyCreateRequest,
             @RequestPart(required=false) MultipartFile Img) {
         // 이미지 업로드 후 URL 반환
         String uploadedImgUrl = null;
