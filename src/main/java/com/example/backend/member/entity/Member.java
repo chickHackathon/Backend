@@ -30,9 +30,7 @@ public class Member {
 
     private float latitude;
     private float longitude;
-    private String region_1depth_name;
-    private String region_2depth_name;
-    private String region_3depth_name;
+    private String location;
 
     @JsonIgnore
     private String refreshToken;
