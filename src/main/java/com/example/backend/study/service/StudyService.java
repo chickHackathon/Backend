@@ -1,7 +1,6 @@
 package com.example.backend.study.service;
 
 import com.example.backend.category.Category;
-import com.example.backend.common.BaseResponse;
 import com.example.backend.member.entity.Member;
 import com.example.backend.member.repository.MemberRepository;
 import com.example.backend.study.dto.*;
@@ -14,6 +13,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+
 
 @Service
 @RequiredArgsConstructor
@@ -70,7 +70,7 @@ public class StudyService {
 
     public List<StudyMyListRes> getMyStudies(StudyMyListReq request) {
         // 내가 만든 스터디 조회 (스터디장이 나인 경우)
-        List<Study> createdStudies = studyRepository.findByMember_Id(request.getMemberId());
+        List<Study> createdStudies = studyRepository.findByMemberId(request.getMemberId());
 
         // 내가 참여한 스터디 조회 (Recruitment 테이블에서 applicant_id로 검색)
         List<Study> joinedStudies = recruitmentRepository.findByApplicantId(request.getMemberId())
@@ -97,5 +97,11 @@ public class StudyService {
 
     }
 
+    public StudyDetailRes getStudyDetail(Long studyId) {
+        Study study = studyRepository.findById(studyId)
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 스터디입니다."));
+        long c = recruitmentRepository.countByStudyId(studyId);
+        return StudyDetailRes.from(study, c);
+    }
 }
 

@@ -16,4 +16,8 @@ public interface RecruitmentRepository extends JpaRepository<Recruitment, Long> 
     List<Study> findJoinedStudiesByMemberId(@Param("memberId") Long memberId);
 
     List<Recruitment> findByApplicantId(Long applicantId);
+
+    Study findByStudyId(Long studyId);
+
+    long countByStudyId(Long studyId);
 }

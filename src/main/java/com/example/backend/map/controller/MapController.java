@@ -4,23 +4,20 @@ import com.example.backend.common.BaseResponse;
 import com.example.backend.map.dto.MapDto;
 import com.example.backend.map.service.MapService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api")
 public class MapController {
 
     private final MapService mapService;
 
-    @GetMapping("/studies/{studyId}/map")
+    @GetMapping("/map")
     public BaseResponse<MapDto> calculateDistance(
-            @PathVariable("studyId") Long studyId
-    ) {
-        MapDto mapDto = mapService.calculateDistance(studyId);
+            @RequestBody List<String> memberIds) {
+        MapDto mapDto = mapService.calculateDistance(memberIds);
         return new BaseResponse<>(mapDto);
 
     }
