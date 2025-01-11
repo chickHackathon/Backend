@@ -6,6 +6,7 @@ import com.example.backend.studyMember.dto.ApplicationStatus;
 import jakarta.persistence.*;
 import lombok.*;
 
+import static jakarta.persistence.FetchType.EAGER;
 import static jakarta.persistence.FetchType.LAZY;
 
 @Entity

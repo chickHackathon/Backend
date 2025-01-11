@@ -3,11 +3,16 @@ package com.example.backend.studyMember.service;
 import com.example.backend.member.entity.Member;
 import com.example.backend.study.entity.Study;
 import com.example.backend.study.repository.StudyRepository;
+import com.example.backend.studyMember.dto.ApplicationMemberDto;
 import com.example.backend.studyMember.dto.ApplicationStatus;
+import com.example.backend.studyMember.dto.ApplicationStudyDto;
 import com.example.backend.studyMember.entity.Application;
 import com.example.backend.studyMember.repository.ApplicationRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @AllArgsConstructor
@@ -48,5 +53,24 @@ public class ApplicationService {
             throw new IllegalArgumentException("이미 신청한 멤버입니다.");
         }
 
+    }
+
+    public List<ApplicationMemberDto> findApplicationMembers(Long studyId){
+        List<Application> applications = applicationRepository.findByStudyId(studyId);
+        List<ApplicationMemberDto> applicationMembers = new ArrayList<>();
+        applications.forEach(e->applicationMembers.add(
+                ApplicationMemberDto.builder().memberId(e.getApplicant().getId()).build()));
+
+        return applicationMembers;
+
+    }
+    public List<ApplicationStudyDto> findMemberApplications(Long memberId){
+        List<Application> memberApplications = applicationRepository.findByApplicantId(memberId);
+
+        List<ApplicationStudyDto> memberApplicationDtos = new ArrayList<>();
+            memberApplications.forEach(e->memberApplicationDtos.add(ApplicationStudyDto.builder()
+                    .status(e.getStatus()).studyId(e.getStudy().getId()).
+                    studyImg(e.getStudy().getImg()).studyTime(e.getStudy().getStudyTime()).build()));
+            return memberApplicationDtos;
     }
 }

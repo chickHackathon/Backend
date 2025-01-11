@@ -28,6 +28,7 @@ public class MemberController {
         return "회원가입 성공";
     }
 
+
     @PostMapping("/login")
     public BaseResponse<Void> login(@Valid @RequestBody MemberLoginRequest memberLoginRequest, HttpServletResponse response) {
 

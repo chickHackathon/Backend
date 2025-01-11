@@ -21,7 +21,7 @@ public class TokenResolver {
     public Member resolveMemberFromRequest(HttpServletRequest request) {
         String accessToken = getAccessTokenFromCookies(request);
         Map<String, Object> claims = jwtProvider.getClaims(accessToken);
-        String username = (String) claims.get("username");
+        String username = (String) claims.get("name");
         return memberService.getMember(username);
     }
 

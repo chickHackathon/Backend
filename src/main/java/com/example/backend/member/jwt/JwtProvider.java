@@ -48,6 +48,7 @@ public class JwtProvider {
         Map<String, Object> claims = new HashMap<>();
 
         claims.put("id", member.getId());
+        claims.put("name",member.getName());
         claims.put("nickname", member.getNickname());
         claims.put("latitude",member.getLatitude());
         claims.put("longitude",member.getLongitude());
