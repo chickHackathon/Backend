@@ -16,7 +16,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class StudyController {
     private final StudyService studyService;
-
     // 스터디 생성
     @PostMapping()
     public BaseResponse<StudyCreateRes> register(
@@ -30,8 +29,5 @@ public class StudyController {
         List<StudyListRes> studyList = studyService.list(studyListReq);
         return new BaseResponse<>(studyList);
     }
-
-
-
 
 }

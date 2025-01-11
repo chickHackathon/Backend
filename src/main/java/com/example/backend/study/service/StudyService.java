@@ -26,6 +26,7 @@ import java.util.stream.Stream;
 public class StudyService {
     private final StudyRepository studyRepository;
     private final MemberRepository memberRepository;
+
      public StudyCreateRes register(StudyCreateReq request) {
             // Member 조회 (스터디장 찾기)
             Member member = memberRepository.findById(request.getMemberId())
@@ -50,7 +51,6 @@ public class StudyService {
                     .studyId(study.getId())
                     .build();
         }
-
     // 조회
     public List<StudyListRes> list(StudyListReq request) {
         // 데이터베이스에서 id 기준으로 정렬된 데이터 조회
@@ -80,6 +80,7 @@ public class StudyService {
 //        return allStudies.stream()
 //                .map(study -> new StudyListRes(study.getId(), study.getTitle(), study.getImg()))
 //                .collect(Collectors.toList());
+//
 //    }
 }
 

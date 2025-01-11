@@ -6,5 +6,6 @@ import lombok.Getter;
 @Builder
 @Getter
 public class StudyListRes {
+
     private Long id;
 }

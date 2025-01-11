@@ -10,7 +10,6 @@ import java.util.List;
 
 public interface StudyRepository extends JpaRepository<Study, Long> {
     List<Study> findAllByOrderByIdAsc();
-
     // 내가 만든 스터디 조회
     List<Study> findByMember(Member member);
 

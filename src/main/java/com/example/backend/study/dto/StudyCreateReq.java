@@ -8,7 +8,6 @@ import java.time.LocalDateTime;
 @Getter
 @AllArgsConstructor
 public class StudyCreateReq {
-
     private Long memberId; // 스터디장 ID
     private String title; // 스터디 제목
     private String content; // 스터디 내용

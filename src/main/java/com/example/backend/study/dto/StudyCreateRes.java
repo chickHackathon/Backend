@@ -6,6 +6,7 @@ import lombok.Getter;
 @Builder
 @Getter
 public class StudyCreateRes {
+
     private Long studyId;
 }
 
