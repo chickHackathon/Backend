@@ -1,6 +1,7 @@
 package com.example.backend.member.controller;
 
 import com.example.backend.common.BaseResponse;
+import com.example.backend.common.TokenResolver;
 import com.example.backend.member.dto.MemberLoginRequest;
 import com.example.backend.member.dto.MemberSignupRequest;
 import com.example.backend.member.entity.Member;
@@ -11,7 +12,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
+
 
 @RestController
 @RequestMapping("/member")
@@ -19,6 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 public class MemberController {
     private final MemberService memberService;
     private final JwtProvider jwtProvider;
+    private final TokenResolver tokenResolver;
 
     @PostMapping("/signup")
     public String signup(@RequestBody MemberSignupRequest memberSignupRequest) {
@@ -26,9 +28,8 @@ public class MemberController {
         return "회원가입 성공";
     }
 
-
     @PostMapping("/login")
-    public BaseResponse<Void> login(@Valid @RequestBody MemberLoginRequest memberLoginRequest, HttpServletResponse response){
+    public BaseResponse<Void> login(@Valid @RequestBody MemberLoginRequest memberLoginRequest, HttpServletResponse response) {
 
         Member member = memberService.getMember(memberLoginRequest.getName());
         //토큰 생성
@@ -39,11 +40,11 @@ public class MemberController {
         cookie.setHttpOnly(true);
         cookie.setSecure(true);
         cookie.setPath("/");
-        cookie.setMaxAge(60*60);
+        cookie.setMaxAge(60 * 60);
         response.addCookie(cookie);
 
         String refreshToken = member.getRefreshToken();
-        Cookie refreshTokenCookie  = new Cookie("refreshToken", refreshToken);
+        Cookie refreshTokenCookie = new Cookie("refreshToken", refreshToken);
         refreshTokenCookie.setHttpOnly(true);
         refreshTokenCookie.setSecure(true);
         refreshTokenCookie.setPath("/");
@@ -54,3 +55,4 @@ public class MemberController {
     }
 
 }
+

@@ -21,6 +21,11 @@ public class ApiSecurityConfig {
         http
                 .securityMatcher("/")
                 .authorizeHttpRequests(authorizeRequests -> authorizeRequests
+                        .requestMatchers(HttpMethod.POST,"/*").permitAll()
+                        .requestMatchers(HttpMethod.GET,"/*").permitAll()
+                        .requestMatchers(HttpMethod.PATCH,"/*").permitAll()
+                        .requestMatchers(HttpMethod.PUT,"/*").permitAll()
+                        .requestMatchers(HttpMethod.DELETE,"/*").permitAll()
                         .requestMatchers(HttpMethod.POST, "/login").permitAll() // 로그인은 누구나 가능, post 요청만 허용
                         .requestMatchers(HttpMethod.GET,"/logout").permitAll()
                         .anyRequest().authenticated()

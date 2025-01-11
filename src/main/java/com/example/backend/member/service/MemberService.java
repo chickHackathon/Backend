@@ -80,4 +80,6 @@ public class MemberService {
     }
 
 
+    public Member findByMemberName(String username) {
+        return memberRepository.findByName(username);    }
 }
