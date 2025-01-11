@@ -1,6 +1,7 @@
 package com.example.backend.member.service;
 
 import com.example.backend.common.BaseResponse;
+import com.example.backend.member.RandomNumberGenerator;
 import com.example.backend.member.dto.MemberSignupRequest;
 import com.example.backend.member.entity.Member;
 import com.example.backend.member.entity.SecurityUser;
@@ -26,10 +27,13 @@ public class MemberService {
     private final JwtProvider jwtProvider;
 
     public Member signup(MemberSignupRequest request) {
+        // 랜덤 아바타 숫자 생성
+        int randomAvatar = RandomNumberGenerator.generateRandomAvatar();
         Member member = Member.builder()
-                .nickname(request.getNickname())
+                .name(request.getName())
                 .email(request.getEmail())
                 .password(request.getPassword())
+                .avatar(randomAvatar)
                 .build();
         return memberRepository.save(member);
     }
@@ -65,10 +69,10 @@ public class MemberService {
         return jwtProvider.verify(token);
     }
     // 토큰갱신
-    public BaseResponse<String> refreshAccessToken(String refreshToken) {
+    public String refreshAccessToken(String refreshToken) {
         Member member = memberRepository.findByRefreshToken(refreshToken).orElseThrow(() -> new IllegalArgumentException("유효하지 않은 토큰입니다."));
         String accessToken = jwtProvider.genAccessToken(member);
-        return new BaseResponse<>(accessToken);
+        return accessToken;
     }
     // 토큰으로 User 정보 가져오기
     public SecurityUser getUserFromAccessToken(String accessToken) {
