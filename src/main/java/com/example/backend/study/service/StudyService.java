@@ -7,6 +7,7 @@ import com.example.backend.member.repository.MemberRepository;
 import com.example.backend.study.dto.*;
 import com.example.backend.study.entity.Study;
 import com.example.backend.study.repository.StudyRepository;
+import com.example.backend.studyMember.entity.Recruitment;
 import com.example.backend.studyMember.repository.RecruitmentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -71,7 +72,10 @@ public class StudyService {
         List<Study> createdStudies = studyRepository.findByMember_Id(request.getMemberId());
 
         // 내가 참여한 스터디 조회 (Recruitment 테이블에서 applicant_id로 검색)
-        List<Study> joinedStudies = recruitmentRepository.findJoinedStudiesByMemberId(request.getMemberId());
+        List<Study> joinedStudies = recruitmentRepository.findByApplicantId(request.getMemberId())
+                .stream()
+                .map(Recruitment::getStudy)
+                .collect(Collectors.toList());
 
         // 두 리스트 합치기 (중복 제거)
         List<Study> allStudies = Stream.concat(createdStudies.stream(), joinedStudies.stream())
