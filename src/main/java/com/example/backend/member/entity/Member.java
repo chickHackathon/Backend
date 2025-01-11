@@ -28,6 +28,8 @@ public class Member {
     private String email;
 
     private String location;
+    private float Latitude;
+    private float Longitude;
 
     @JsonIgnore
     private String refreshToken;
