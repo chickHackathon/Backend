@@ -20,7 +20,7 @@ spring:
 
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MariaDBDialect
@@ -32,4 +32,4 @@ custom:
   jwt:
     secretKey: 1231asdassdq2eq3213dsfdf442321bw323rr32rdsfwereryek55k5kwqwfqfwqmm6mi8nnwqnnqdnqnasjsjaddasdasd
   accessToken:
-    expirationSeconds: "#{60*10}"
+    expirationSeconds: "#{60*60}"
