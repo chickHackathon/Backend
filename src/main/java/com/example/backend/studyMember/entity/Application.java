@@ -1,7 +1,7 @@
 package com.example.backend.studyMember.entity;
 
 import com.example.backend.member.entity.Member;
-import com.example.backend.study.entity.study.Study;
+import com.example.backend.study.entity.Study;
 import com.example.backend.studyMember.dto.ApplicationStatus;
 import jakarta.persistence.*;
 import lombok.*;
