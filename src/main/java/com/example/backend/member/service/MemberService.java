@@ -54,10 +54,10 @@ public class MemberService {
         return jwtProvider.verify(token);
     }
     // 토큰갱신
-    public BaseResponse<String> refreshAccessToken(String refreshToken) {
+    public String refreshAccessToken(String refreshToken) {
         Member member = memberRepository.findByRefreshToken(refreshToken).orElseThrow(() -> new IllegalArgumentException("유효하지 않은 토큰입니다."));
         String accessToken = jwtProvider.genAccessToken(member);
-        return new BaseResponse<>(accessToken);
+        return accessToken;
     }
     // 토큰으로 User 정보 가져오기
     public SecurityUser getUserFromAccessToken(String accessToken) {

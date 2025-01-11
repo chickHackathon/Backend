@@ -26,7 +26,7 @@ public class JwtProvider {
 
     public SecretKey getSecretKey() {
         if (cachedSecretKey == null) {
-            cachedSecretKey = cachedSecretKey = _getSecretKey();
+            cachedSecretKey = _getSecretKey();
         }
         return cachedSecretKey;
     }
@@ -71,6 +71,7 @@ public class JwtProvider {
     // 유효성 검증
     public boolean verify (String token) {
         try {
+
             Jwts.parserBuilder()
                     .setSigningKey(getSecretKey())
                     .build()
