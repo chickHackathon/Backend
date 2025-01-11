@@ -1,4 +1,4 @@
-package com.example.backend.filter;
+/*package com.example.backend.filter;
 
 
 import com.example.backend.common.BaseResponse;
@@ -29,7 +29,7 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
     @SneakyThrows
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) {
         if (request.getRequestURI().equals("/member/login") || request.getRequestURI().equals("/member/logout")||
-                request.getRequestURI().equals("/member/signup")) {
+                request.getRequestURI().equals("/member/signup")|| request.getRequestURI().equals("/swagger-ui/index.html")) {
             filterChain.doFilter(request, response);
             return;
         }
@@ -52,9 +52,8 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
             SecurityUser securityUser = memberService.getUserFromAccessToken(accessToken);
             // 인가 처리
             SecurityContextHolder.getContext().setAuthentication(securityUser.genAuthentication());
-        }else{
-            throw new IllegalArgumentException("토큰이 비어있습니다.");
         }
+
         filterChain.doFilter(request, response);
     }
     private String _getCookie(String name) {
@@ -78,3 +77,4 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
         resp.addHeader("Set-Cookie", cookie.toString());
     }
 }
+*/

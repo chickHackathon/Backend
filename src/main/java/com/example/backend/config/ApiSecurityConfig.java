@@ -1,4 +1,4 @@
-package com.example.backend.config;
+/*package com.example.backend.config;
 
 import com.example.backend.filter.JwtAuthorizationFilter;
 import lombok.RequiredArgsConstructor;
@@ -29,6 +29,7 @@ public class ApiSecurityConfig {
                         .requestMatchers(HttpMethod.PATCH,"/*").permitAll()
                         .requestMatchers(HttpMethod.PUT,"/*").permitAll()
                         .requestMatchers(HttpMethod.DELETE,"/*").permitAll()
+                        .requestMatchers("/swagger-ui/index.html").permitAll()
                         .requestMatchers("/member/*").permitAll() // 로그인은 누구나 가능, post 요청만 허용
                         .anyRequest().authenticated()
                 )
@@ -43,3 +44,5 @@ public class ApiSecurityConfig {
         return http.build();
     }
 }
+
+ */
