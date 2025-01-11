@@ -16,8 +16,5 @@ public class MemberSignupRequest {
     private String location;
     private float latitude;
     private float longitude;
-    private String region_1depth_name;
-    private String region_2depth_name;
-    private String region_3depth_name;
 
 }

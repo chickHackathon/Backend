@@ -1,7 +1,6 @@
 package com.example.backend.study.service;
 
 import com.example.backend.category.Category;
-import com.example.backend.common.BaseResponse;
 import com.example.backend.member.entity.Member;
 import com.example.backend.member.repository.MemberRepository;
 import com.example.backend.study.dto.*;
@@ -15,6 +14,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+
 @Service
 @RequiredArgsConstructor
 public class StudyService {
@@ -22,30 +22,31 @@ public class StudyService {
     private final MemberRepository memberRepository;
     private final RecruitmentRepository recruitmentRepository;
 
-     public StudyCreateRes register(StudyCreateReq request) {
-            // Member 조회 (스터디장 찾기)
-            Member member = memberRepository.findById(request.getMemberId())
-                    .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 사용자입니다."));
+    public StudyCreateRes register(StudyCreateReq request, String uploadedImgUrl) {
+        // Member 조회 (스터디장 찾기)
+        Member member = memberRepository.findById(request.getMemberId())
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 사용자입니다."));
 
-            // Study 엔티티 생성
-            Study study = Study.builder()
-                    .title(request.getTitle())
-                    .content(request.getContent())
-                    .category(Category.valueOf(String.valueOf(request.getCategory()))) // Enum 값으로 변환
-                    .deadline(request.getDeadline()) // 요청 데이터에서 마감일 설정
-                    .studyTime(request.getStudyTime()) // 요청 데이터에서 스터디 시간 설정
-                    .member(member) // 스터디장 설정
-                    .finish(false) // 기본값 설정
-                    .build();
+        // Study 엔티티 생성
+        Study study = Study.builder()
+                .title(request.getTitle())
+                .content(request.getContent())
+                .category(Category.valueOf(String.valueOf(request.getCategory()))) // Enum 값으로 변환
+                .deadline(request.getDeadline()) // 요청 데이터에서 마감일 설정
+                .studyTime(request.getStudyTime()) // 요청 데이터에서 스터디 시간 설정
+                .member(member) // 스터디장 설정
+                .Img(uploadedImgUrl) // 업로드된 이미지 URL 설정
+                .finish(false) // 기본값 설정
+                .build();
 
-            // 저장
-            study = studyRepository.save(study);
+        // 저장
+        study = studyRepository.save(study);
 
-            // 응답 DTO 반환
-            return StudyCreateRes.builder()
-                    .studyId(study.getId())
-                    .build();
-        }
+        // 응답 DTO 반환
+        return StudyCreateRes.builder()
+                .studyId(study.getId())
+                .build();
+    }
     // 조회
     public List<StudyListRes> list(StudyListReq request) {
         // 데이터베이스에서 id 기준으로 정렬된 데이터 조회
@@ -69,7 +70,7 @@ public class StudyService {
 
     public List<StudyMyListRes> getMyStudies(StudyMyListReq request) {
         // 내가 만든 스터디 조회 (스터디장이 나인 경우)
-        List<Study> createdStudies = studyRepository.findByMember_Id(request.getMemberId());
+        List<Study> createdStudies = studyRepository.findByMemberId(request.getMemberId());
 
         // 내가 참여한 스터디 조회 (Recruitment 테이블에서 applicant_id로 검색)
         List<Study> joinedStudies = recruitmentRepository.findByApplicantId(request.getMemberId())
@@ -96,5 +97,11 @@ public class StudyService {
 
     }
 
+    public StudyDetailRes getStudyDetail(Long studyId) {
+        Study study = studyRepository.findById(studyId)
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 스터디입니다."));
+        long c = recruitmentRepository.countByStudyId(studyId);
+        return StudyDetailRes.from(study, c);
+    }
 }
 
