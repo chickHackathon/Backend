@@ -9,6 +9,7 @@ import com.example.backend.studyMember.dto.ApplicationStudyDto;
 import com.example.backend.studyMember.entity.Application;
 import com.example.backend.studyMember.repository.ApplicationRepository;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -16,6 +17,7 @@ import java.util.List;
 
 @Service
 @AllArgsConstructor
+@Slf4j
 public class ApplicationService {
 
     private final ApplicationRepository applicationRepository;
@@ -55,11 +57,25 @@ public class ApplicationService {
 
     }
 
-    public List<ApplicationMemberDto> findApplicationMembers(Long studyId){
-        List<Application> applications = applicationRepository.findByStudyId(studyId);
+    public List<ApplicationMemberDto> findApplicationMembers(Member member){
+        List<Study> memberStudies = studyRepository.findByMember_Id(member.getId());
+        log.info(memberStudies.toString()+":::::::::::"+member.getId());
+        List<Application> applications = new ArrayList<>();
         List<ApplicationMemberDto> applicationMembers = new ArrayList<>();
-        applications.forEach(e->applicationMembers.add(
-                ApplicationMemberDto.builder().memberId(e.getApplicant().getId()).build()));
+
+        for(Study one : memberStudies){
+            for(Application two : applicationRepository.findByStudyId(one.getId())){
+                if(member.getId()==two.getApplicant().getId()){
+                    continue;
+                }
+                applicationMembers.add(
+                                ApplicationMemberDto.builder().
+                                        memberId(two.getApplicant().getId())
+                                        .studyId(one.getId()).build());
+            }
+            log.info(applicationMembers.toString());
+        }
+
 
         return applicationMembers;
 

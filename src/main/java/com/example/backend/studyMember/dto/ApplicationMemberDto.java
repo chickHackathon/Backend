@@ -7,4 +7,5 @@ import lombok.Getter;
 @Getter
 public class ApplicationMemberDto {
     private Long memberId;
+    private Long studyId;
 }
