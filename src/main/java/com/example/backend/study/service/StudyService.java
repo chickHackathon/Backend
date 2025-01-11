@@ -4,10 +4,7 @@ import com.example.backend.category.Category;
 import com.example.backend.common.BaseResponse;
 import com.example.backend.member.entity.Member;
 import com.example.backend.member.repository.MemberRepository;
-import com.example.backend.study.dto.StudyCreateReq;
-import com.example.backend.study.dto.StudyCreateRes;
-import com.example.backend.study.dto.StudyListReq;
-import com.example.backend.study.dto.StudyListRes;
+import com.example.backend.study.dto.*;
 import com.example.backend.study.entity.Study;
 import com.example.backend.study.repository.StudyRepository;
 import com.example.backend.studyMember.repository.RecruitmentRepository;
@@ -33,7 +30,7 @@ public class StudyService {
             Study study = Study.builder()
                     .title(request.getTitle())
                     .content(request.getContent())
-                    .category(Category.valueOf(request.getCategory())) // Enum 값으로 변환
+                    .category(Category.valueOf(String.valueOf(request.getCategory()))) // Enum 값으로 변환
                     .deadline(request.getDeadline()) // 요청 데이터에서 마감일 설정
                     .studyTime(request.getStudyTime()) // 요청 데이터에서 스터디 시간 설정
                     .member(member) // 스터디장 설정
@@ -57,15 +54,20 @@ public class StudyService {
         return studyEntities.stream()
                 .map(entity -> StudyListRes.builder()
                         .id(entity.getId())
+                        .title(entity.getTitle())
+                        .img(entity.getImg())
+                        .content(entity.getContent())
+                        .category(String.valueOf(entity.getCategory()))
                         .build())
                 .collect(Collectors.toList());
     }
-    public List<StudyListRes> getMyStudies(Member member) {
+
+    public List<StudyMyListRes> getMyStudies(StudyMyListReq request) {
         // 내가 만든 스터디 조회 (스터디장이 나인 경우)
-        List<Study> createdStudies = studyRepository.findByMember(member);
+        List<Study> createdStudies = studyRepository.findByMember_Id(request.getMemberId());
 
         // 내가 참여한 스터디 조회 (Recruitment 테이블에서 applicant_id로 검색)
-        List<Study> joinedStudies = recruitmentRepository.findJoinedStudiesByMemberId(member.getId());
+        List<Study> joinedStudies = recruitmentRepository.findJoinedStudiesByMemberId(request.getMemberId());
 
         // 두 리스트 합치기 (중복 제거)
         List<Study> allStudies = Stream.concat(createdStudies.stream(), joinedStudies.stream())
@@ -74,12 +76,12 @@ public class StudyService {
 
         // 응답 객체로 변환
         return allStudies.stream()
-                .map(study -> new StudyListRes(
+                .map(study -> new StudyMyListRes(
                         study.getId(),
                         study.getTitle(),
                         study.getImg(),
                         study.getContent(),
-                        study.getCategory() != null ? study.getCategory().getCode() : null, // Enum 값을 문자열로 변환
+                        study.getCategory() != null ? String.valueOf(study.getCategory()) : null, // Enum 값을 문자열로 변환
                         study.isFinish()
                 ))
                 .collect(Collectors.toList());

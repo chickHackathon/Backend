@@ -1,28 +1,29 @@
 package com.example.backend.category;
 
 public enum Category {
+    ART("예술"),
+    ARTIFICIAL_INTELLIGENCE("인공지능"),
+    CAREER("커리어"),
+    DATA_SCIENCE("데이터 과학"),
+    DESIGN("디자인"),
     DEVELOPMENT("개발"),
     GAME_DEVELOPMENT("게임 개발"),
-    DATA_SCIENCE("데이터 사이언스"),
-    ARTIFICIAL_INTELLIGENCE("인공지능"),
-    SECURITY("보안"),
-    NETWORK("네트워크"),
     HARDWARE("하드웨어"),
-    DESIGN("디자인"),
-    ART("아트"),
-    PLANNING("기획"),
     MANAGEMENT("경영"),
     MARKETING("마케팅"),
-    CAREER("커리어"),
+    NETWORK("네트워크"),
+    PLANNING("기획"),
+    SECURITY("시큐리티"),
     SELF_DEVELOPMENT("자기 계발");
 
-    private final String description;
+    private final String displayName;
 
-    Category(String description) {
-        this.description = description;
+    Category(String displayName) {
+        this.displayName = displayName;
     }
 
-    public String getDescription() {
-        return description;
+    public String getDisplayName() {
+        return displayName;
     }
 }
+
