@@ -1,10 +1,8 @@
 package com.example.backend.member.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 @Entity
@@ -12,6 +10,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @NoArgsConstructor
 @Builder
 @Getter
+@Setter
 @EntityListeners(AuditingEntityListener.class)
 public class Member {
 
@@ -29,4 +28,8 @@ public class Member {
     private String email;
 
     private String location;
+
+    @JsonIgnore
+    private String refreshToken;
+
 }
