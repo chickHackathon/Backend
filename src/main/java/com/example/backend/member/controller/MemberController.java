@@ -21,7 +21,7 @@ public class MemberController {
     private final JwtProvider jwtProvider;
 
     @PostMapping("/signup")
-    public String signup(MemberSignupRequest memberSignupRequest) {
+    public String signup(@RequestBody MemberSignupRequest memberSignupRequest) {
         memberService.signup(memberSignupRequest);
         return "회원가입 성공";
     }
