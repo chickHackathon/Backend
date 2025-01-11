@@ -21,6 +21,7 @@ public class Member {
     private String name;
 
     private String password;
+
     @Column(nullable = false, length = 50)
     private String nickname;
 
@@ -36,4 +37,6 @@ public class Member {
     @JsonIgnore
     private String refreshToken;
 
+    @Column(nullable = false)
+    private int avatar;
 }
