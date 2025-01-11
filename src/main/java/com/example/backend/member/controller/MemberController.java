@@ -2,6 +2,7 @@ package com.example.backend.member.controller;
 
 import com.example.backend.common.BaseResponse;
 import com.example.backend.member.dto.MemberLoginRequest;
+import com.example.backend.member.dto.MemberSignupRequest;
 import com.example.backend.member.entity.Member;
 import com.example.backend.member.jwt.JwtProvider;
 import com.example.backend.member.service.MemberService;
@@ -9,10 +10,8 @@ import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequestMapping("/member")
@@ -20,6 +19,13 @@ import org.springframework.web.bind.annotation.RestController;
 public class MemberController {
     private final MemberService memberService;
     private final JwtProvider jwtProvider;
+
+    @PostMapping("/signup")
+    public String signup(@RequestBody MemberSignupRequest memberSignupRequest) {
+        memberService.signup(memberSignupRequest);
+        return "회원가입 성공";
+    }
+
 
     @PostMapping("/login")
     public BaseResponse<Void> login(@Valid @RequestBody MemberLoginRequest memberLoginRequest, HttpServletResponse response){

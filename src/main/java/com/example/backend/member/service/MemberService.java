@@ -1,6 +1,7 @@
 package com.example.backend.member.service;
 
 import com.example.backend.common.BaseResponse;
+import com.example.backend.member.dto.MemberSignupRequest;
 import com.example.backend.member.entity.Member;
 import com.example.backend.member.entity.SecurityUser;
 import com.example.backend.member.jwt.JwtProvider;
@@ -10,6 +11,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -22,6 +24,15 @@ public class MemberService {
     private final MemberRepository memberRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtProvider jwtProvider;
+
+    public Member signup(MemberSignupRequest request) {
+        Member member = Member.builder()
+                .nickname(request.getNickname())
+                .email(request.getEmail())
+                .password(request.getPassword())
+                .build();
+        return memberRepository.save(member);
+    }
 
     public Member join(String name, String password) {
         Member CheckedSignUpMember = memberRepository.findByName(name);
@@ -67,4 +78,6 @@ public class MemberService {
         List<GrantedAuthority> authorities = new ArrayList<>();
         return new SecurityUser(id, username, "", authorities);
     }
+
+
 }
