@@ -27,7 +27,8 @@ public class SecurityConfig {
                             configuration.applyPermitDefaultValues();
                             configuration.addAllowedOrigin("http://localhost:3000");
                             configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "PATCH", "DELETE", "HEAD")); // 허용 HTTP 메서드
-                            configuration.setAllowCredentials(true); // 쿠키 및 인증정보 허용
+                            configuration.setAllowCredentials(true);
+                            configuration.addAllowedMethod("*");
                             return configuration;
                         }))
                 .authorizeHttpRequests((authorizeHttpRequests) -> authorizeHttpRequests
