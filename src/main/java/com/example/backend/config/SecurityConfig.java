@@ -21,16 +21,6 @@ public class SecurityConfig {
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(AbstractHttpConfigurer::disable)
-                .cors(cors -> cors
-                        .configurationSource(request -> {
-                            CorsConfiguration configuration = new CorsConfiguration();
-                            configuration.applyPermitDefaultValues();
-                            configuration.addAllowedOrigin("*");
-                            configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "PATCH", "DELETE", "HEAD")); // 허용 HTTP 메서드
-                            configuration.setAllowCredentials(true);
-                            configuration.addAllowedMethod("*");
-                            return configuration;
-                        }))
                 .authorizeHttpRequests((authorizeHttpRequests) -> authorizeHttpRequests
                         .requestMatchers(new AntPathRequestMatcher("/**")).permitAll())
                 .sessionManagement(session -> session
