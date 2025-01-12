@@ -22,7 +22,7 @@ public class StudyService {
     private final MemberRepository memberRepository;
     private final RecruitmentRepository recruitmentRepository;
 
-    public StudyCreateRes register(StudyCreateReq request, String uploadedImgUrl) {
+    public StudyCreateRes register(StudyCreateReq request, String uploadedImgUrl, Long currentMemberId) {
         // Member 조회 (스터디장 찾기)
         Member member = memberRepository.findById(request.getMemberId())
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 사용자입니다."));
@@ -68,12 +68,15 @@ public class StudyService {
                 .collect(Collectors.toList());
     }
 
-    public List<StudyMyListRes> getMyStudies(StudyMyListReq request) {
+    public List<StudyMyListRes> getMyStudies(Long currentMemberId) {
+        Member member = memberRepository.findById(currentMemberId)
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 사용자입니다."));
+
         // 내가 만든 스터디 조회 (스터디장이 나인 경우)
-        List<Study> createdStudies = studyRepository.findByMemberId(request.getMemberId());
+        List<Study> createdStudies = studyRepository.findByMemberId(currentMemberId);
 
         // 내가 참여한 스터디 조회 (Recruitment 테이블에서 applicant_id로 검색)
-        List<Study> joinedStudies = recruitmentRepository.findByApplicantId(request.getMemberId())
+        List<Study> joinedStudies = recruitmentRepository.findByApplicantId(currentMemberId)
                 .stream()
                 .map(Recruitment::getStudy)
                 .collect(Collectors.toList());

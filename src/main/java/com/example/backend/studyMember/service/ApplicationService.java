@@ -1,6 +1,7 @@
 package com.example.backend.studyMember.service;
 
 import com.example.backend.member.entity.Member;
+import com.example.backend.member.repository.MemberRepository;
 import com.example.backend.study.entity.Study;
 import com.example.backend.study.repository.StudyRepository;
 import com.example.backend.studyMember.dto.ApplicationMemberDto;
@@ -22,8 +23,10 @@ public class ApplicationService {
 
     private final ApplicationRepository applicationRepository;
     private final StudyRepository studyRepository;
+    private final MemberRepository memberRepository;
 
-    public void createApplication(Long studyId, Member currentMember) {
+    public void createApplication(Long studyId, Long currentMemberId) {
+        Member currentMember = findMember(currentMemberId);
         Study study = findStudy(studyId);
         verifyFirstRequest(studyId, currentMember.getId());
         Application.of(study, currentMember);
@@ -34,7 +37,8 @@ public class ApplicationService {
         return studyRepository.findById(studyId).orElseThrow(() -> new IllegalArgumentException("해당 스터디가 존재하지 않습니다."));
     }
 
-    public void deleteApplication(Long studyId, Long applicationId, Member currentMember) {
+    public void deleteApplication(Long studyId, Long applicationId, Long currentMemberId) {
+        Member currentMember = findMember(currentMemberId);
         Study study = findStudy(studyId);
         Application application = findApplication(studyId, applicationId);
 
@@ -50,6 +54,11 @@ public class ApplicationService {
                 .orElseThrow(() -> new IllegalArgumentException("해당 신청이 존재하지 않습니다."));
     }
 
+    private Member findMember(Long memberId) {
+        return memberRepository.findById(memberId)
+                .orElseThrow(() -> new IllegalArgumentException("해당 멤버가 존재하지 않습니다."));
+    }
+
     private void verifyFirstRequest(Long studyId, Long applicantId)  {
         if(applicationRepository.findByStudyIdAndApplicantId(studyId, applicantId).isPresent()){
             throw new IllegalArgumentException("이미 신청한 멤버입니다.");
@@ -57,7 +66,8 @@ public class ApplicationService {
 
     }
 
-    public List<ApplicationMemberDto> findApplicationMembers(Member member){
+    public List<ApplicationMemberDto> findApplicationMembers(Long currentMemberId) {
+        Member member = findMember(currentMemberId);
         List<Study> memberStudies = studyRepository.findByMemberId(member.getId());
         log.info(memberStudies.toString()+":::::::::::"+member.getId());
         List<Application> applications = new ArrayList<>();
@@ -80,6 +90,7 @@ public class ApplicationService {
         return applicationMembers;
 
     }
+
     public List<ApplicationStudyDto> findMemberApplications(Long memberId){
         List<Application> memberApplications = applicationRepository.findByApplicantId(memberId);
 

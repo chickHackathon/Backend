@@ -30,7 +30,7 @@ public class MemberController {
 
 
     @PostMapping("/login")
-    public BaseResponse<Void> login(@Valid @RequestBody MemberLoginRequest memberLoginRequest, HttpServletResponse response) {
+    public BaseResponse<Void> login(@Valid @RequestPart MemberLoginRequest memberLoginRequest, HttpServletResponse response) {
 
         Member member = memberService.getMember(memberLoginRequest.getName());
         //토큰 생성
