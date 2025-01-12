@@ -25,7 +25,7 @@ public class SecurityConfig {
                         .configurationSource(request -> {
                             CorsConfiguration configuration = new CorsConfiguration();
                             configuration.applyPermitDefaultValues();
-                            configuration.addAllowedOrigin("http://localhost:3000");
+                            configuration.addAllowedOrigin("*");
                             configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "PATCH", "DELETE", "HEAD")); // 허용 HTTP 메서드
                             configuration.setAllowCredentials(true);
                             configuration.addAllowedMethod("*");
