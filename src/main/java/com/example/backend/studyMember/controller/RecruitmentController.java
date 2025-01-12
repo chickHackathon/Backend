@@ -22,12 +22,11 @@ public class RecruitmentController {
     @PostMapping("/study/{studyId}/recruitment/member/{memberId}")
     @Tag(name="스터디 신청 수락")
     public BaseResponse<Void> createRecruitment(
-            HttpServletRequest request,
+            @RequestParam Long currentMemberId,
             @PathVariable("studyId") Long studyId,
             @PathVariable("memberId") Long memberId
     ) {
-        Member currentMember = tokenResolver.resolveMemberFromRequest(request);
-        recruitmentService.createRecruitment(studyId, memberId, currentMember);
+        recruitmentService.createRecruitment(studyId, memberId, currentMemberId);
         return new BaseResponse<>();
     }
 

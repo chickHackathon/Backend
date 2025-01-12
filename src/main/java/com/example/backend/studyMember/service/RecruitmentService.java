@@ -1,6 +1,7 @@
 package com.example.backend.studyMember.service;
 
 import com.example.backend.member.entity.Member;
+import com.example.backend.member.repository.MemberRepository;
 import com.example.backend.study.entity.Study;
 import com.example.backend.study.repository.StudyRepository;
 import com.example.backend.studyMember.dto.ApplicationStatus;
@@ -18,8 +19,11 @@ public class RecruitmentService {
     private final RecruitmentRepository recruitmentRepository;
     private final ApplicationRepository applicationRepository;
     private final StudyRepository studyRepository;
+    private final MemberRepository memberRepository;
 
-    public void createRecruitment(Long studyId, Long applicantId, Member currentMember) {
+    public void createRecruitment(Long studyId, Long applicantId, Long currentMemberId) {
+        Member currentMember = findMember(currentMemberId);
+
         Study study = findStudy(studyId);
         Application application = findApplication(studyId, applicantId);
         if(!currentMember.getId().equals(study.getMember().getId())) {
@@ -38,4 +42,10 @@ public class RecruitmentService {
         return applicationRepository.findByStudyIdAndApplicantId(studyId, applicantId)
                 .orElseThrow(() -> new IllegalArgumentException("해당 신청이 존재하지 않습니다."));
     }
+
+    private Member findMember(Long memberId) {
+        return memberRepository.findById(memberId)
+                .orElseThrow(() -> new IllegalArgumentException("해당 멤버가 존재하지 않습니다."));
+    }
+
 }
