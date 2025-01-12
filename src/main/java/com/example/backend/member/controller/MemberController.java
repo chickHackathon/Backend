@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/member")
 @RequiredArgsConstructor
+@CrossOrigin(value="http://localhost:3000",maxAge = 3600)
 public class MemberController {
     private final MemberService memberService;
     private final JwtProvider jwtProvider;
