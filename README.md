@@ -34,21 +34,17 @@ PPiYo는 스터디 관리와 추천을 간편하게 제공하는 서비스입니
 
 ## 🔧 기술 스택
 
-### 📱 **프론트엔드:**  
-  <img src="https://img.shields.io/badge/React-20232A?style=flat&logo=React&logoColor=61DAFB&color=white" alt="React">  <img src="https://img.shields.io/badge/TypeScript-007ACC?style=flat&logo=TypeScript&logoColor=007ACC&color=white" alt="TypeScript">
+### 📱 **프론트엔드:**
+  <img src="https://img.shields.io/badge/React-20232A?style=flat&logo=React&logoColor=61DAFB&color=white" alt="React">  <img src="https://img.shields.io/badge/TypeScript-007ACC?style=flat&logo=TypeScript&logoColor=007ACC&color=white" alt="TypeScript"> <img src="https://img.shields.io/badge/Redux-764ABC?style=flat&logo=redux&logoColor=764ABC&color=white" alt="Redux"> <img src="https://img.shields.io/badge/Axios-764ABC?style=flat&logo=axios&logoColor=5A29E4&color=white" alt="Axios"> <img src="https://img.shields.io/badge/Styled%20Components-DB7093?style=flat&logo=styledcomponents&logoColor=DB7093&color=white" alt="Styled Components"> <img src="https://img.shields.io/badge/Netlify-00C7B7?style=flat&logo=netlify&logoColor=00C7B7&color=white" alt="Netlify">
 
 ### 💻 **백엔드:**  
-  <img src="https://img.shields.io/badge/Spring%20Boot-6DB33F?style=flat&logo=Spring%20Boot&logoColor=61DAFB&color=white" alt="Spring Boot"> <img src="https://img.shields.io/badge/Spring%20Security-6DB33F?style=flat&logo=Spring%20Security&logoColor=61DAFB&color=white" alt="Spring Security">
+  <img src="https://img.shields.io/badge/Spring%20Boot-6DB33F?style=flat&logo=Spring%20Boot&logoColor=6DB33F&color=white" alt="Spring Boot"> <img src="https://img.shields.io/badge/Spring%20Security-6DB33F?style=flat&logo=Spring%20Security&logoColor=6DB33F&color=white" alt="Spring Security">
 
 ### 💻 **클라우드:** 
-<img src="https://img.shields.io/badge/AWS-232F3E?style=flat&logoColor=61DAFB&color=white" alt="AWS">
+<img src="https://img.shields.io/badge/AmazonEC2-232F3E?style=flat&&logo=amazonec2&logoColor=FF9900&color=white" alt="amazonec2">
   
-
-  
-  
-
 ### 💾 **데이터베이스:**  
-  <img src="https://img.shields.io/badge/MariaDB-47A248?style=flat&logo=MariaDB&logoColor=47A248&color=white" alt="MariaDB">
+  <img src="https://img.shields.io/badge/MariaDB-47A248?style=flat&logo=MariaDB&logoColor=003545&color=white" alt="MariaDB">
 
 ### 📽️ **웹 서버:**  
   <img src="https://img.shields.io/badge/NGINX-009639?style=flat&logo=NGINX&logoColor=009639&color=white" alt="NGINX">
