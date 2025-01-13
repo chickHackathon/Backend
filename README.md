@@ -38,7 +38,7 @@ PPiYo는 스터디 관리와 추천을 간편하게 제공하는 서비스입니
   <img src="https://img.shields.io/badge/React-20232A?style=flat&logo=React&logoColor=61DAFB&color=white" alt="React">  <img src="https://img.shields.io/badge/TypeScript-007ACC?style=flat&logo=TypeScript&logoColor=007ACC&color=white" alt="TypeScript">
 
 ### 💻 **백엔드:**  
-  <img src="https://img.shields.io/badge/Spring%20Boot-6DB33F?style=flat&logo=Spring%20Boot&logoColor=white" alt="Spring Boot"> <img src="https://img.shields.io/badge/gradle-02303A?style=for-the-badge&logo=gradle&logoColor=white"> <img src="https://img.shields.io/badge/Spring%20Security-6DB33F?style=flat&logo=Spring%20Security&logoColor=white" alt="Spring Security">
+  <img src="https://img.shields.io/badge/Spring%20Boot-6DB33F?style=flat&logo=Spring%20Boot&logoColor=61DAFB&color=white" alt="Spring Boot"> <img src="https://img.shields.io/badge/Spring%20Security-6DB33F?style=flat&logo=Spring%20Security&logoColor=61DAFB&color=white" alt="Spring Security">
 
 ### 💻 **클라우드:** 
 <img src="https://img.shields.io/badge/AWS-232F3E?style=flat&logo=Amazon%20AWS&logoColor=white" alt="AWS">
